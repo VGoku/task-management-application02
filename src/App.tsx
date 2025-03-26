@@ -69,29 +69,32 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen dark:bg-gray-900 transition-colors duration-300">
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen dark:bg-dark-bg transition-colors duration-300">
+        <div className="container mx-auto px-4 py-6 md:py-10">
           <Routes>
             <Route path="/" element={
               <>
-                <header className="mb-8 text-center">
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 dark:from-primary-400 dark:to-primary-200 bg-clip-text text-transparent mb-2">
-                    Task Management
+                <header className="mb-8 md:mb-12 text-center relative">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary-600/10 dark:bg-primary-500/10 rounded-full blur-3xl -z-10"></div>
+                  <h1 className="text-4xl md:text-5xl font-bold heading-gradient mb-3 animate-float">
+                    Taskify
                   </h1>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    Organize and track your tasks efficiently
+                  <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
+                    Your personal task manager that makes productivity fun and efficient
                   </p>
                 </header>
 
-                <TaskMetrics tasks={tasks} />
-                <TaskProgress tasks={tasks} />
-                <TaskDeadlines tasks={tasks} />
-                
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+                  <TaskMetrics tasks={tasks} />
+                  <TaskProgress tasks={tasks} />
+                  <TaskDeadlines tasks={tasks} />
+                </div>
+
                 <TaskStats tasks={tasks} />
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                  <div className="bg-white dark:bg-dark-card rounded-xl shadow-sm p-6">
-                    <h2 className="text-2xl font-semibold text-primary-700 dark:text-primary-400 mb-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                  <div className="glass-card">
+                    <h2 className="text-2xl font-semibold heading-gradient mb-6">
                       {editingTask ? 'Edit Task' : 'Create New Task'}
                     </h2>
                     <TaskForm
@@ -100,22 +103,29 @@ function App() {
                     />
                   </div>
                   
-                  <div className="bg-white dark:bg-dark-card rounded-xl shadow-sm p-6">
-                    <h2 className="text-2xl font-semibold text-primary-700 dark:text-primary-400 mb-4">
-                      Tasks
+                  <div className="glass-card">
+                    <h2 className="text-2xl font-semibold heading-gradient mb-6">
+                      Your Tasks
                     </h2>
                     <SearchBar
                       onSearch={setSearchQuery}
                       onFilterChange={setStatusFilter}
                     />
-                    <TaskList
-                      tasks={filteredTasks}
-                      onDelete={handleDeleteTask}
-                      onEdit={handleEditTask}
-                      onStatusChange={handleStatusChange}
-                    />
+                    <div className="h-[400px] overflow-y-auto mt-4 custom-scrollbar pr-1">
+                      <TaskList
+                        tasks={filteredTasks}
+                        onDelete={handleDeleteTask}
+                        onEdit={handleEditTask}
+                        onStatusChange={handleStatusChange}
+                      />
+                    </div>
                   </div>
                 </div>
+
+                <footer className="mt-16 text-center text-gray-500 dark:text-gray-400 text-sm pb-4">
+                  <p>© {new Date().getFullYear()} Taskify. All rights reserved.</p>
+                  <p className="mt-1">Designed to showcase modern web development skills</p>
+                </footer>
               </>
             } />
             <Route path="*" element={<NotFound />} />
